@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.haima.crm.dao.permission.IPermissionMapper" >
+	<select id="findRoot" resultType="Permission" parameterType="TzParams">
+		SELECT
+			id,
+			pname,
+			purl,
+			module,
+			method
+		FROM
+			h_permission
+		WHERE
+			is_delete = 0 and parent_id IS NULL
+	</select>
+	
+	<select id="findChildren" resultType="Permission">
+		SELECT
+			id,
+			pname,
+			purl,
+			module,
+			method
+		FROM
+			h_permission
+		WHERE
+			is_delete = 0 and parent_id=#{pid}
+	</select>
+</mapper>

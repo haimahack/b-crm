@@ -1,0 +1,21 @@
+package [packagePath];
+
+import java.io.Serializable;
+[impackage]
+
+
+public class [beanName] implements Serializable {
+	
+	[declaration]
+	
+	public [beanName]() {
+		super();
+	}
+
+	public [beanName]([parameter]) {
+		super();
+		[statement]
+	}
+	
+	[function]
+}

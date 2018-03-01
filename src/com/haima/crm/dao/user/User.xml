@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.haima.crm.dao.user.IUserMapper" >
+	<select id="find" resultType="User" parameterType="TzParams">
+		SELECT
+			id,
+			uname,
+			nickname,
+			pwd,
+			sex,
+			age,
+			birthday,
+			user_pic as userPic,
+			email,
+			mobile,
+			weixin,
+			create_time as createTime,
+			update_time as updateTime,
+			login_time as loginTime,
+			login_ip as loginIp,
+			is_delete as isDelete,
+			is_email as isEmail,
+			is_phone as isPhone,
+			is_weixin as isWeixin,
+			is_disable as isDisable,
+			address
+		FROM h_user
+		<trim prefix="WHERE" prefixOverrides="AND | OR">  
+			<if test="@com.haima.crm.util.TmStringUtils@isNotEmpty(keyword)">
+				 uname LIKE '%${keyword}%'
+			</if>
+			<if test="@com.haima.crm.util.TmStringUtils@isNotEmpty(isDelete)">
+				AND is_delete = #{isDelete} 
+			</if>
+		</trim>
+		ORDER BY ${order}
+		LIMIT #{pageNo},#{pageSize} 		
+	</select>
+	
+	<select id="count" resultType="Long" parameterType="TzParams">
+		SELECT
+			COUNT(1)
+		FROM h_user
+		<trim prefix="WHERE" prefixOverrides="AND | OR">  
+			<if test="@com.haima.crm.util.TmStringUtils@isNotEmpty(keyword)">
+				 uname LIKE '%${keyword}%'
+			</if>
+			<if test="@com.haima.crm.util.TmStringUtils@isNotEmpty(isDelete)">
+				AND is_delete = #{isDelete} 
+			</if>
+		</trim>
+	</select>
+	
+	<select id="getLogin" resultType="User" parameterType="TzParams">
+		SELECT
+			id,
+			uname,
+			nickname,
+			email,
+			is_disable as isDisable,
+			is_delete as isDelete
+		FROM
+			h_user
+		WHERE
+			<choose>
+				<when test="@com.haima.crm.util.TmStringUtils@isEmail(uname)">
+					email=#{uname}
+				</when>
+				<otherwise>
+					uname=#{uname}
+				</otherwise>
+			</choose>
+		AND pwd = #{pwd} AND is_delete = 0 		
+	</select>
+	
+	<!-- 删除和更新 id不要判断 -->
+	<update id="update" parameterType="User">
+		UPDATE
+			h_user
+		<set>
+			<if test="isDelete!=null">is_delete=#{isDelete},</if>
+			<if test="isDisable!=null">is_disable=#{isDisable},</if>
+		</set>
+		WHERE
+			id=#{id}
+	</update>
+	
+	<select id="get" resultType="User">
+		SELECT
+			id,
+			uname,
+			nickname,
+			sex,
+			age,
+			email,
+			mobile,
+			weixin,
+			create_time as createTime,
+			update_time as updateTime,
+			login_time as loginTime,
+			login_ip as loginIp,
+			is_delete as isDelete,
+			is_email as isEmail,
+			is_phone as isPhone,
+			is_weixin as isWeixin,
+			is_disable as isDisable
+		FROM
+			h_user
+		WHERE id=#{id}
+	</select>
+	
+	<!-- 删除和更新 id不要判断 -->
+	<delete id="delete" parameterType="TzParams">
+		DELETE FROM h_user WHERE id=#{id}
+	</delete>
+</mapper>

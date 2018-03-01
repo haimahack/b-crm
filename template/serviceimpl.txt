@@ -1,0 +1,74 @@
+package [servicePackage].[smallBeanName].impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import [beanPackage].[beanName];
+import [beanPackage].TzParams;
+import [daoPackage].[smallBeanName].I[beanName]Mapper;
+import [servicePackage].[smallBeanName].I[beanName]Service;
+import [utilPackage].TmStringUtils;
+
+/**
+ * [description]
+ *@author: [author]
+ *@fileName: [fileName]
+ *@email: [email]
+ *@date: [date]
+ */
+@Service
+public class [beanName]ServiceImpl implements I[beanName]Service {
+
+	@Autowired
+	private I[beanName]Mapper [smallBeanName]Mapper;
+	
+	
+	@Override
+	public List<[beanName]> find(TzParams params) {
+		if(TmStringUtils.isEmpty(params.getOrder()))
+			params.setOrder("create_time DESC");
+		return [smallBeanName]Mapper.find(params);
+	}
+	
+	@Override
+	public [beanName] get(Long id) {
+		return [smallBeanName]Mapper.get(id);
+	}
+	
+	@Override
+	public Long count(TzParams params) {
+		return [smallBeanName]Mapper.count(params);
+	}
+	
+	@Override
+	public int save([beanName] [smallBeanName]) {
+		if([smallBeanName]!=null){
+			[smallBeanName]Mapper.save([smallBeanName]);
+			return 1;
+		}else{
+			return 0;
+		}
+	}
+
+	@Override
+	public int update([beanName] [smallBeanName]) {
+		if([smallBeanName]!=null){
+			[smallBeanName]Mapper.update([smallBeanName]);
+			return 1;
+		}else{
+			return 0;
+		}
+	}
+
+	@Override
+	public int delete(TzParams params) {
+		if(params!=null){
+			[smallBeanName]Mapper.delete(params);
+			return 1;
+		}else{
+			return 0;
+		}
+	}
+
+}

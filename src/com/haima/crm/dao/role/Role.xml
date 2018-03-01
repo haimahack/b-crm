@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.haima.crm.dao.role.IRoleMapper" >
+	<select id="find" resultType="Role" parameterType="TzParams">
+		SELECT
+			id,
+			rname,
+			create_time as createTime,
+			update_time as updateTime,
+			description,
+			user_id as userId,
+			is_delete as isDelete
+		FROM h_role
+		<trim prefix="WHERE" prefixOverrides="AND | OR">  
+			<if test="@com.haima.crm.util.TmStringUtils@isNotEmpty(keyword)">
+				 rname LIKE '%${keyword}%'
+			</if>
+		</trim>
+		ORDER BY ${order}
+		LIMIT #{pageNo},#{pageSize} 		
+	</select>
+	
+	<select id="count" resultType="Long" parameterType="TzParams">
+		SELECT
+			COUNT(1)
+		FROM h_role
+		<trim prefix="WHERE" prefixOverrides="AND | OR">  
+			<if test="@com.haima.crm.util.TmStringUtils@isNotEmpty(keyword)">
+				 rname LIKE '%${keyword}%'
+			</if>
+		</trim>
+	</select>
+	
+	<insert id="saveRoleUser">
+		INSERT INTO h_user_role(user_id,role_id) VALUES(#{userId},#{roleId})
+	</insert>
+	
+	<insert id="saveRolePermission">
+		INSERT INTO h_role_permission(role_id,permission_id) VALUES(#{roleId},#{permissionId})
+	</insert>
+	
+	<delete id="deleteRolePermission">
+		DELETE FROM h_role_permission WHERE role_id=#{roleId}
+	</delete>
+	
+	<!-- 根据用户主键查询出对应的角色 -->
+	<select id="findRolesByUserId" resultType="java.util.HashMap">
+		SELECT
+			GROUP_CONCAT(r.rname) as names,CONVERT(GROUP_CONCAT(r.id),CHARACTER) as rids
+		FROM
+			h_user_role ur
+		LEFT JOIN
+			h_role  r ON r.id=ur.role_id
+		WHERE ur.user_id=#{userId}
+	</select>
+	
+	<!-- 查询没有分配角色的用户 -->
+	<select id="findFilterUsers" resultType="java.util.HashMap" parameterType="TzParams">
+		SELECT
+			id,uname,email
+		FROM
+			h_user
+		WHERE id NOT IN(
+			SELECT user_id FROM h_user_role WHERE role_id = #{roleId})
+			<if test="@com.haima.crm.util.TmStringUtils@isNotEmpty(keyword)">
+				AND uname LIKE '%${keyword}%'
+			</if>
+			<if test="@com.haima.crm.util.TmStringUtils@isNotEmpty(isDelete)">
+				AND is_delete = #{isDelete} 
+			</if>
+		LIMIT #{pageNo} ,#{pageSize} 		
+	</select>
+	
+	<!-- 查询没有分配角色用户的总数 -->
+	<select id="countFilterUsers" resultType="Long" parameterType="TzParams">
+		SELECT
+			COUNT(1)
+		FROM
+			h_user
+		WHERE id NOT IN(
+			SELECT user_id FROM h_user_role WHERE role_id = #{roleId})
+			<if test="@com.haima.crm.util.TmStringUtils@isNotEmpty(keyword)">
+				AND uname LIKE '%${keyword}%'
+			</if>
+			<if test="@com.haima.crm.util.TmStringUtils@isNotEmpty(isDelete)">
+				AND is_delete = #{isDelete} 
+			</if>
+	</select>
+</mapper>

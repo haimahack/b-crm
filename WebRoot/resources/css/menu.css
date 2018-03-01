@@ -1,0 +1,93 @@
+@charset "utf-8";
+
+#menu a { text-decoration: none; }
+#menu ul { list-style: none; }
+#menu {z-index:999;position: fixed; width: 150px; height: 200px; border: 1px solid #000000; border-radius: 5px; display: none; backface-visibility: hidden; background-color: #353535; }
+#menu ul li { position: relative; height: 45px; transition: 0.5s }
+#menu ul li div.icon { position: absolute; left: 5px; top: 5px; width: 40px; height: 35px; background: url("../../resources/images/icon.png") no-repeat; }
+#menu ul.m-up li:nth-child(1) div.icon { background-position: 0 0; transition: 0.3s }
+#menu ul.m-up li:nth-child(2) div.icon { background-position: -40px 0; transition: 0.3s }
+#menu ul.m-down li:nth-child(1) div.icon { background-position: -80px 0; transition: 0.3s }
+#menu ul.m-down li:nth-child(2) div.icon { background-position: -120px 0; transition: 0.3s }
+#menu ul li p { margin-left:40px;left: 60px; font-size: 18px; color: rgba(255,255,255,0.8); line-height: 45px; text-align: center; transition: 0.8s }
+#menu div.line { height: 1px; width: 90%; background: #ff88e2; margin: 3px 10px; }
+#menu ul li:hover { background: rgba(199, 154, 255, .2); }
+#menu ul li:hover p { font-size:20px;font-weight:bold;color: #0f0; text-shadow: #fff 1px 1px 1px; }
+#menu ul.m-up li:nth-child(1):hover div.icon { background-position: 0 -35px; }
+#menu ul.m-up li:nth-child(2):hover div.icon { background-position: -40px -35px; }
+#menu ul.m-down li:nth-child(1):hover div.icon { background-position: -80px -35px; }
+#menu ul.m-down li:nth-child(2):hover div.icon { background-position: -120px -35px; }
+#menu div.mask { width: 150px; height: 150px; position: absolute; overflow: hidden; }
+#menu div.mask div.cat { background: url("../../resources/images/cat.gif")no-repeat; width: 150px; height: 150px; position: absolute; }
+#menu div#maskT { top: -153px; margin-left: 25px; }
+#menu #maskT>.cat { bottom: -153px; transform: rotate(270deg); }
+#menu div#maskB { bottom: -153px; margin-left: 25px; }
+#menu #maskB>.cat { top: -153px; transform: rotate(-270deg); }
+#menu div#maskL { left: -153px; }
+#menu #maskL>.cat { right: -153px; transform: rotateY(180deg); }
+#menu div#maskR { left: 150px; }
+#menu #maskR>.cat { left: -153px; }
+#menu:hover div#maskT div.cat { animation: move1 4s 8s forwards; }
+#menu:hover div#maskB div.cat { animation: move2 4s 12s forwards; }
+#menu:hover div#maskL div.cat { animation: move3 4s forwards; }
+#menu:hover div#maskR div.cat { animation: move4 4s 4s forwards; }
+
+ @keyframes move1 {
+ 0% {
+	transform: translate(0px, 0px) rotate(270deg);
+	}
+	 40% {
+	transform: translate(0px, -153px) rotate(270deg);
+	}
+	 60% {
+	transform: translate(0px, -153px) rotate(270deg);
+	}
+	 100% {
+	transform: translate(0px, 0) rotate(270deg);
+	}
+}
+
+ @keyframes move2 {
+ 0% {
+	transform: translate(0px, 0px) rotate(-270deg);
+	}
+	 40% {
+	transform: translate(0px, 153px) rotate(-270deg);
+	}
+	 60% {
+	transform: translate(0px, 153px) rotate(-270deg);
+	}
+	 100% {
+	transform: translate(0px, 0) rotate(-270deg);
+	}
+}
+
+ @keyframes move3 {
+ 0% {
+	transform: translate(0px, 0px) rotateY(180deg);
+	}
+	 40% {
+	transform: translate(-153px, 0) rotateY(180deg);
+	}
+	 60% {
+	transform: translate(-153px, 0) rotateY(180deg);
+	}
+	 100% {
+	transform: translate(0px, 0) rotateY(180deg);
+	}
+}
+
+ @keyframes move4 {
+ 0% {
+	transform: translate(0px, 0px);
+	}
+	 40% {
+	transform: translate(153px, 0);
+	}
+	 60% {
+	transform: translate(153px, 0);
+	}
+	 100% {
+	transform: translate(0px, 0);
+	}
+}

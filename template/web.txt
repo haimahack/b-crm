@@ -1,0 +1,57 @@
+package [webPackage].[smallBeanName];
+
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import [beanPackage].[beanName];
+import [beanPackage].TzParams;
+import [servicePackage].[smallBeanName].I[beanName]Service;
+
+/**
+ * [description]
+ *@author: [author]
+ *@fileName: [fileName]
+ *@email: [email]
+ *@date: [date]
+ */
+
+@Controller
+@RequestMapping("/sys/[smallBeanName]")
+public class [beanName]Controller {
+
+	@Autowired
+	private I[beanName]Service [smallBeanName]Service;
+	
+	@RequestMapping("list")
+	public String list(){
+		return "[smallBeanName]/list";
+	}
+	
+	@RequestMapping("template")
+	public ModelAndView template(TzParams params){
+		ModelAndView modelAndView = new ModelAndView();
+		List<[beanName]> [smallBeanName]s = [smallBeanName]Service.find(params);
+		Long count = [smallBeanName]Service.count(params);
+		modelAndView.addObject("datas",[smallBeanName]s);
+		modelAndView.addObject("itemCount",count);
+		modelAndView.setViewName("[smallBeanName]/template");
+		
+		return modelAndView;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="update",method=RequestMethod.POST)
+	public String update([beanName] [smallBeanName]){
+		int code = [smallBeanName]Service.update([smallBeanName]);
+		if(code == 1)
+			return "success";
+		else
+			return "fail";
+		
+	}
+}

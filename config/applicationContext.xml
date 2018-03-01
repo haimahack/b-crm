@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+			http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.2.xsd">
+  
+  
+ 	<!--spring2.5没有注解前 定义contentDaoImpl 
+ 	<bean id="contentDaoImpl" class="com.bonclan.dao.content.impl.ContentDaoImpl"></bean>
+ 	
+ 	<bean id="contentServiceImpl" class="com.bonclan.service.content.impl.ContentServiceImpl">
+ 		<property name="contentDao" ref="contentDaoImpl"></property>
+ 	</bean>
+ 	<bean id="contentAction" class="com.bonclan.web.content.ContentAction">
+ 		<property name="contentService" ref="contentServiceImpl"></property>
+ 	</bean>
+ 	-->
+ 	
+ 	
+ 	<!--  扫包
+ 	@Service用于标注业务层组件、
+	@Controller用于标注控制层组件（控制层action和springmvc-controller类）、
+	@Repository用于标注数据访问组件，即DAO组件。
+	@Component泛指组件，当组件不好归类的时候，我们可以使用这个注解进行标注
+ 	这类注解的类都是需要被扫描
+ 	说白了就是：让Spring的ApplicationContext去加载和初始化所有加了注解的类将其实例化 -->
+ 	
+ 	<!-- 扫描文件所在dao包 
+ 		把这个包下面所有的类放入到该数组 ===》只加载一次
+ 		String[] strs={"com.bonclan.dao.impl.ContentDaoImpl.java ..."};
+ 		for(String str:strs){
+ 			Class clazz = Class.forName("com.bonclan.dao.impl.ContentDaoImpl");
+ 			ContentDaoImpl obj=(ContentDaoImpl) clazz.newInstance();
+ 			
+ 			Annotation annotation = clazz.getAnnotation(Controller.class);
+ 			if(annotation!=null){
+ 				//把对象注册到applicationContext应用上下文中
+ 			}
+ 		}
+ 	-->
+ 	<context:component-scan base-package="com.haima.crm.dao"></context:component-scan>
+ 	<context:component-scan base-package="com.haima.crm.service"></context:component-scan>
+ 	<context:component-scan base-package="com.haima.crm.web"></context:component-scan>
+ 	<context:component-scan base-package="com.haima.crm.core.aop"></context:component-scan>
+ 	
+ 	<!-- 引入数据的db资源文件 解析加密db用户名密码-->
+	<bean class="com.haima.crm.core.security.EncryptPropertyPlaceholderConfigurer"
+		p:location="classpath:db.properties" p:fileEncoding="utf-8" />
+ 	
+ 	
+ 	<!-- dbcp c3po proxy durid 都是为了一个数据连接的问题，建立一个连接池塘，这里池塘里面有链接对象。 供 jdbc hibernate 
+		mybatis springjdbctemplate去获取 -->
+	<!--数据库连接
+	name	 	配置这个属性的意义在于，如果存在多个数据源，监控的时候 
+				可以通过名字来区分开来。如果没有配置，将会生成一个名字， 
+				格式是："DataSource-" + System.identityHashCode(this)
+	jdbcUrl	 	连接数据库的url，不同数据库不一样。例如： 
+				mysql : jdbc:mysql://10.20.153.104:3306/druid2  
+				oracle : jdbc:oracle:thin:@10.20.149.85:1521:ocnauto
+	username	 	连接数据库的用户名
+	password	 	连接数据库的密码。如果你不希望密码直接写在配置文件中， 
+					可以使用ConfigFilter。详细看这里： 
+					https://github.com/alibaba/druid/wiki/%E4%BD%BF%E7%94%A8ConfigFilter
+	driverClassName	根据url自动识别	这一项可配可不配，如果不配置druid会根据url自动识别dbType，然后选择相应的driverClassName
+	initialSize	0	初始化时建立物理连接的个数。初始化发生在显示调用init方法，或者第一次getConnection时
+	maxActive	8	最大连接池数量
+	maxIdle	8	已经不再使用，配置了也没效果
+	minIdle	 	最小连接池数量
+	maxWait	 	获取连接时最大等待时间，单位毫秒。配置了maxWait之后， 
+				缺省启用公平锁，并发效率会有所下降， 
+				如果需要可以通过配置useUnfairLock属性为true使用非公平锁。
+	poolPreparedStatements	false	是否缓存preparedStatement，也就是PSCache。 
+									PSCache对支持游标的数据库性能提升巨大，比如说oracle。 
+									在mysql5.5以下的版本中没有PSCache功能，建议关闭掉。
+									作者在5.5版本中使用PSCache，通过监控界面发现PSCache有缓存命中率记录， 
+									该应该是支持PSCache。
+	maxOpenPreparedStatements	-1	要启用PSCache，必须配置大于0，当大于0时， 
+									poolPreparedStatements自动触发修改为true。 
+									在Druid中，不会存在Oracle下PSCache占用内存过多的问题， 
+									可以把这个数值配置大一些，比如说100
+	validationQuery	 	用来检测连接是否有效的sql，要求是一个查询语句。 
+						如果validationQuery为null，testOnBorrow、testOnReturn、 
+						testWhileIdle都不会其作用。
+	testOnBorrow	true	申请连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能。
+	testOnReturn	false	归还连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能
+	testWhileIdle	false	建议配置为true，不影响性能，并且保证安全性。 
+							申请连接的时候检测，如果空闲时间大于 
+							timeBetweenEvictionRunsMillis， 
+							执行validationQuery检测连接是否有效。
+	timeBetweenEvictionRunsMillis	 	有两个含义： 
+										1) Destroy线程会检测连接的间隔时间 
+										2) testWhileIdle的判断依据，详细看testWhileIdle属性的说明
+										numTestsPerEvictionRun	 	不再使用，一个DruidDataSource只支持一个EvictionRun
+	minEvictableIdleTimeMillis		配置一个连接在池中最小生存的时间，单位是毫秒 	 
+	connectionInitSqls	 		物理连接初始化的时候执行的sql
+	exceptionSorter			根据dbType自动识别	当数据库抛出一些不可恢复的异常时，抛弃连接
+	filters	 	属性类型是字符串，通过别名的方式配置扩展插件， 
+				常用的插件有： 
+				监控统计用的filter:stat  
+				日志用的filter:log4j 
+				防御sql注入的filter:wall
+	proxyFilters	 	类型是List<com.alibaba.druid.filter.Filter>， 
+						如果同时配置了filters和proxyFilters， 
+						是组合关系，并非替换关系
+	-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+    	<!-- 基本属性driverClassName url、username、password -->
+    	<property name="driverClassName" value="${jdbc.driver}"></property> 
+	    <property name="url" value="${jdbc.url}" />
+	    <property name="username" value="${jdbc.username}"/>
+	    <property name="password" value="${jdbc.pwd}"/>
+	    
+	    <!-- 设置连接池初始值 -->
+	    <property name="initialSize" value="6"></property>
+	    <property name="minIdle" value="3"></property>
+	    <property name="maxActive" value="60"></property>
+	    
+	    <!-- 这里建议配置为TRUE，防止取到的连接不可用 --> 
+  		<property name="testOnBorrow" value="true" />
+  		
+	    <!-- 配置获取连接等待超时的时间,单位是毫秒 -->
+	    <property name="maxWait" value="60000"></property>
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+	    <property name="timeBetweenEvictionRunsMillis" value="600000"></property>
+	    
+	    <property name="testWhileIdle" value="true"></property>
+	    <!-- 验证连接有效与否的SQL，不同的数据配置不同 --> 
+  		<property name="validationQuery" value="select 'x'" />
+  		
+  		<!-- 超过时间限制是否回收 -->  
+		<property name="removeAbandoned" value="true" />  
+		<!-- 超时时间；单位为秒。120秒=2分钟 -->  
+		<property name="removeAbandonedTimeout" value="120" />  
+		<!-- 关闭abanded连接时输出错误日志 -->  
+		<property name="logAbandoned" value="true" />
+  		
+  		<!-- 配置监控统计拦截的filters -->
+      	<property name="filters" value="stat,wall" />
+      	
+	    <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+	    <property name="minEvictableIdleTimeMillis" value="200000"></property>
+ 	</bean>
+ 	
+ 	
+ 	<!-- mybatis配置 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <!-- 映射所有的sql对应的模块的xml文件 -->
+        <property name="mapperLocations" value="classpath:com/haima/crm/dao/*/*.xml"></property>
+        <!-- 注册mybatisbean别名 -->
+        <property name="typeAliasesPackage" value="com.haima.crm.entity"></property>
+        <!-- 加载mybatis住配置文件 -->
+        <property name="configLocation" value="classpath:mybatis-config.xml"></property>
+    </bean> 
+    
+    <!--初始化mybatis的模板 ，如果使用mapper就可以不需要使用模板，和下面的二选一-->
+<!-- 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"> -->
+<!-- 		<constructor-arg ref="sqlSessionFactory" /> -->
+<!-- 	</bean>  -->
+<!-- 	mybatis的mapper转换器 也就是说的接口，里面原理是采用的jdk的动态代理实现的-->
+  	 <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"> 
+  		<property name="basePackage" value="com.haima.crm.dao"></property> 
+  	 </bean> 
+ 	<!-- 该包下的类支持注解，表示会被当作{@code mybatis mapper}处理 配置了之后表示可以自动引入mapper类-->
+<!--   	<mybatis:scan base-package="com.haima.crm.dao"/> -->
+ 	
+ 	
+ 	<!--第一种方式： 开启aop注解  开启切面编程（通过配置织入@Aspectj切面 
+ 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+ 	<bean id="logAware" class="com.haima.crm.core.aop.LogAware"></bean>
+ 	-->
+ 	<!-- 第二种方式: -->
+ 	<aop:config>
+ 		<aop:pointcut expression="execution(* com.haima.crm.service.*.*.*(..))" id="logpointCut"/>
+ 		<aop:aspect ref="logAware"><!-- 类名小写 -->
+ 			<aop:around method="doBasicProfiling" pointcut-ref="logpointCut"/>
+ 		</aop:aspect>
+ 	</aop:config>
+ 	
+ 	<!-- druid spring 监控设置 start-->
+	<bean id="druid-stat-interceptor" class="com.alibaba.druid.support.spring.stat.DruidStatInterceptor" />
+	<bean id="druid-stat-pointcut" class="org.springframework.aop.support.JdkRegexpMethodPointcut" scope="prototype">
+		<property name="patterns">
+			<list>
+				<value>com.haima.crm.service.*</value>
+				<value>com.haima.crm.dao.*</value>
+			</list>
+		</property>
+	</bean>
+	<aop:config proxy-target-class="true">
+		<aop:advisor advice-ref="druid-stat-interceptor" pointcut-ref="druid-stat-pointcut" />
+	</aop:config>
+	<!-- druid spring 监控设置 end-->
+	
+</beans>

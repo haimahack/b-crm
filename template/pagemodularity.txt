@@ -1,0 +1,28 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/pages/common/public.jsp" %>
+
+<c:forEach var="[smallBeanName]" varStatus="[smallBeanName]index" items="${datas}">
+	<tr>
+		<td>
+			${[smallBeanName].id}
+			<c:if test="${[smallBeanName]index.index==0 }">
+				<input type="hidden" id="itemCount" value="${itemCount }">
+			</c:if>
+		</td>	
+		<td class="tmui-tips" tip="${tz:formatDate([smallBeanName].createTime,'yyyy-MM-dd HH:mm:ss')}">
+			${tz:timeFormat([smallBeanName].createTime)}
+		</td>
+		<td>
+			<tz:if test="${[smallBeanName].isDelete==0}">
+				<tz:then><a href="javascript:void(0);" opid="${[smallBeanName].id }" mark="isDelete" val="1" onclick="tzAdmin.op(this)" class="red tzui-op">否</a></tz:then>
+				<tz:else><a href="javascript:void(0);" opid="${[smallBeanName].id }" mark="isDelete" val="0" onclick="tzAdmin.op(this)" class="green tzui-op">是</a></tz:else>
+			</tz:if>
+		</td>
+		<td>
+			<!-- class="fa fa-fw fa-ambulance" -->
+			<a href="javascript:void(0);" class="tmui-tips" tip="编辑" data-opid="${[smallBeanName].id }" onclick="tzAdmin.edit(this)"><i class="fa fa-fw fa-pencil-square-o"></i></a>
+			<a href="javascript:void(0);" class="tmui-tips" tip="删除" data-opid="${[smallBeanName].id }" onclick="tzAdmin.remove(this)"><i class="fa fa-fw fa-trash"></i></a>
+		</td>
+	</tr>
+</c:forEach>

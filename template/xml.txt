@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="[daoPackage].[smallBeanName].I[beanName]Mapper" >
+	<select id="find" resultType="[beanName]" parameterType="TzParams">
+		SELECT
+			id,
+			name as name,
+			create_time as createTime,
+			update_time as updateTime,
+			is_delete as isDelete
+		FROM h_[smallBeanName]
+		<trim prefix="WHERE" prefixOverrides="AND | OR">  
+			<if test="@[utilPackage].TmStringUtils@isNotEmpty(keyword)">
+				 name LIKE '%${keyword}%'
+			</if>
+		</trim>
+		ORDER BY ${order}
+		LIMIT #{pageNo},#{pageSize} 		
+	</select>
+	
+	<select id="count" resultType="Long" parameterType="TzParams">
+		SELECT
+			COUNT(1)
+		FROM h_[smallBeanName]
+		<trim prefix="WHERE" prefixOverrides="AND | OR">  
+			<if test="@[utilPackage].TmStringUtils@isNotEmpty(keyword)">
+				 name LIKE '%${keyword}%'
+			</if>
+		</trim>
+	</select>
+	
+	<!-- 删除和更新 id不要判断,加resultType报错 -->
+	<update id="update" parameterType="[beanName]">
+		UPDATE
+			h_[smallBeanName]
+		<set>
+			<if test="isDelete!=null">is_delete=#{isDelete},</if>
+		</set>
+		WHERE
+			id=#{id}
+	</update>
+</mapper>

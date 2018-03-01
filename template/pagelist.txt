@@ -1,0 +1,90 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/pages/common/public.jsp" %>
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+   <title>[smallBeanName]-list - h-crm</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+
+	<%@ include file="../../pages/common/taglib.jsp" %>
+	<script type="text/javascript" charset="utf-8" src="${basePath}/resources/sg/tz_page.js"></script>
+</head>
+  
+<body>
+  <div id="wrapper">
+	
+	<!-- left页面 -->
+    <%@include file="../../pages/common/left.jsp" %>
+    
+  	<!-- Page Content -->
+	<div id="page-content-wrapper">
+		<button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
+		<span class="hamb-top"></span>
+		<span class="hamb-middle"></span>
+		<span class="hamb-bottom"></span>
+		</button>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2">
+			        <div class="content">
+			            <!-- head页面 -->
+			            <%@include file="../../pages/common/head.jsp" %>
+			            
+						<div class="h-channel"> 主页 》 [description] </div>
+						<div class="cnt">
+							<div class="tabwrap">
+								
+								<!--表格-->
+								<table class="tztab">
+									<caption>
+										[description]
+										<div class="fr sbtn">
+											<input type="text" id="keywords" onchange="tzAdmin.change(this)" class="fl" placeholder="输入搜索关键词..."/>
+											<a href="javascript:void(0);" onclick="tzAdmin.search(this)" class="tmui-tips" tip="搜索"><i class="fa fa-fw fa-search"></i></a>
+										</div>
+									</caption>
+									<thead>
+										<tr>
+											<th>主键</th>
+											<th>创建时间</th>	
+											<th>删除状态</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+									<!--身体部-->
+									<tbody id="tbody" data-model="[smallBeanName]">
+										<tr>
+											<td id="loading" colspan="30"></td>
+										</tr>
+									</tbody>
+								</table>
+								<div class="cpage"></div>
+							</div>
+						</div>
+					</div><!--content end  -->
+				</div>
+			</div><!--row end  -->
+		</div>
+	</div><!-- /#page-content-wrapper -->
+  	
+</div><!-- /#wrapper -->
+
+<script type="text/javascript">
+	$(function(){
+		
+		//在 tz_admin.js调用
+		//加载数据
+		tzAdmin.loadData(0,8,function(itemCount){
+			tzAdmin.initPage(itemCount);//分页加载一次
+		});
+	});
+</script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+package [servicePackage].[smallBeanName];
+
+import java.util.List;
+import [beanPackage].[beanName];
+import [beanPackage].TzParams;
+
+
+/**
+ * [description]
+ *@author: [author]
+ *@fileName: [fileName]
+ *@email: [email]
+ *@date: [date]
+ */
+public interface I[beanName]Service {
+
+	/**
+	 * 查询所有
+	 * @param params
+	 * @return
+	 */
+	List<[beanName]> find(TzParams params);
+	
+	/**
+	 * 根据主键获取
+	 * @param id
+	 * @return
+	 */
+	[beanName] get(Long id);
+	
+	/**
+	 * 获取总数
+	 * @param params
+	 * @return
+	 */
+	Long count(TzParams params);
+	
+	/**
+	 * 保存
+	 * @param [smallBeanName]
+	 * @return
+	 */
+	int save([beanName] [smallBeanName]);
+	
+	/**
+	 * 更新
+	 * @param [smallBeanName]
+	 * @return
+	 */
+	int update([beanName] [smallBeanName]);
+	
+	/**
+	 * 删除
+	 * @param params
+	 * @return
+	 */
+	int delete(TzParams params);
+}

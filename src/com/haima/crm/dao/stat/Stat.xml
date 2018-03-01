@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.haima.crm.dao.stat.IStatMapper" >
+	<select id="find" resultType="Stat" parameterType="TzParams">
+		SELECT
+			id,
+			classname,
+			method,
+			time,
+			create_time as createTime,
+			ip,
+			host_address as hostAddress,
+			user_id as userId,
+			username,
+			module,
+			description
+		FROM h_stat
+		<trim prefix="WHERE" prefixOverrides="AND | OR">  
+			<if test="@com.haima.crm.util.TmStringUtils@isNotEmpty(keyword)">
+				 method LIKE '%${keyword}%'
+			</if>
+		</trim>
+		ORDER BY ${order}
+		LIMIT #{pageNo},#{pageSize} 		
+	</select>
+	
+	<select id="count" resultType="Long" parameterType="TzParams">
+		SELECT
+			COUNT(1)
+		FROM h_stat
+		<trim prefix="WHERE" prefixOverrides="AND | OR">  
+			<if test="@com.haima.crm.util.TmStringUtils@isNotEmpty(keyword)">
+				 method LIKE '%${keyword}%'
+			</if>
+		</trim>
+	</select>
+	
+	<insert id="save" parameterType="Stat">
+		INSERT INTO h_stat(
+			classname,
+			method,
+			time,
+			ip,
+			host_address,
+			user_id,
+			username,
+			module,
+			description)
+		VALUES(
+			#{classname},
+			#{method},
+			#{time},
+			#{ip},
+			#{hostAddress},
+			#{userId},
+			#{username},
+			#{module},
+			#{description})
+	</insert>
+	
+	<resultMap id="contentMap" type="java.util.HashMap">
+		<result column="create_time" property="time"/>
+		<result column="is_delete" property="isDelete"/>
+		<result column="is_top" property="isTop"/>
+		<result column="is_push" property="isPush"/>
+		<result column="is_comment" property="isComment"/>
+	</resultMap>
+	
+	<!-- 内容统计分组 -->
+	<select id="groupContents" resultMap="contentMap" parameterType="TzParams">
+		SELECT
+			id,
+			title,
+			create_time,
+			is_delete,
+			is_top,
+			is_push,
+			is_comment,
+			issuance
+		FROM
+			h_content
+		WHERE
+			DATE_FORMAT(create_time,'%Y')=#{year}
+		AND
+			DATE_FORMAT(create_time,'%m')=#{month}
+		ORDER BY ${order}
+		limit #{pageNo},#{pageSize}
+	</select>
+	
+	<!-- 用户统计分组 -->
+	<select id="groupUsers" resultType="java.util.HashMap" parameterType="TzParams">
+		SELECT
+			COUNT(1) as num,
+			DATE_FORMAT(create_time,'%H') as h
+		FROM h_user
+		WHERE DATE_FORMAT(create_time,'%Y-%m-%d')= #{date}
+		GROUP BY h
+		ORDER BY h
+	</select>
+	
+	
+	<!-- 日志统计分组 -->
+	<select id="groupStats" resultType="java.util.HashMap" parameterType="TzParams">
+		SELECT
+			COUNT(1) as num,
+			DATE_FORMAT(create_time,'%H') as h
+		FROM h_stat
+		WHERE DATE_FORMAT(create_time,'%Y-%m-%d')= #{date}
+		GROUP BY h
+		ORDER BY h
+	</select>
+	
+	<!-- 统计 -->
+	<select id="group" resultType="java.util.HashMap" parameterType="TzParams">
+		SELECT
+			DATE_FORMAT(create_time,'%m') AS m,
+			COUNT(1) as num
+		FROM
+			h_content
+		WHERE
+			DATE_FORMAT(create_time,'%Y') =#{year}
+		GROUP BY m
+		ORDER BY m DESC
+	</select>
+	
+	
+	<!-- 删除和更新 id不要判断 -->
+	<delete id="delete" parameterType="TzParams">
+		DELETE FROM h_stat WHERE id=#{id}
+	</delete>
+</mapper>

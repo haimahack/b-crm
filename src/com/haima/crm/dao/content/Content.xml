@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.haima.crm.dao.content.IContentMapper" >
+	<select id="find" resultType="Content" parameterType="TzParams">
+		SELECT
+			id,
+			title,
+			sub_title as subTitle,
+			content,
+			create_time as createTime,
+			update_time as updateTime,
+			static_link as staticLink,
+			tag,
+			cover_img as coverImg,
+			small_img as smallImg,
+			cover_width as coverWidth,
+			cover_height as coverHeight,
+			hits,
+			loves,
+			collections,
+			comments,
+			keywords,
+			description,
+			html_code as htmlCode,
+			js_code as jsCode,
+			css_code as cssCode,
+			is_code as isCode,
+			header_pic as headerPic,
+			author,
+			user_id as userId,
+			channel_id as channelId,
+			is_delete as isDelete,
+			is_top as isTop,
+			is_push as isPush,
+			is_comment as isComment,
+			issuance,
+			type
+		FROM
+			h_content
+		<trim prefix="WHERE" prefixOverrides="AND | OR">  
+			<if test="@com.haima.crm.util.TmStringUtils@isNotEmpty(keyword)">
+				title LIKE '%${keyword}%'
+			</if>
+		</trim>
+		ORDER BY ${order}
+		LIMIT #{pageNo},#{pageSize} 		
+	</select>
+	
+	<select id="count" resultType="Long" parameterType="TzParams">
+		SELECT
+			COUNT(1)
+		FROM
+			h_content
+		<trim prefix="WHERE" prefixOverrides="AND | OR">  
+			<if test="@com.haima.crm.util.TmStringUtils@isNotEmpty(keyword)">
+				 title LIKE '%${keyword}%'
+			</if>
+		</trim>
+	</select>
+	
+	<!-- 删除和更新 id不要判断 -->
+	<update id="update" parameterType="Content">
+		UPDATE
+			h_content
+		<set>
+			<if test="isDelete!=null">is_delete=#{isDelete},</if>
+			<if test="isTop!=null">is_top=#{isTop},</if>
+			<if test="isPush!=null">is_push=#{isPush},</if>
+			<if test="isComment!=null">is_comment=#{isComment},</if>
+			<if test="issuance!=null">issuance=#{issuance},</if>
+		</set>
+		WHERE
+			id=#{id}
+	</update>
+	
+	<!-- 删除和更新 id不要判断 -->
+	<delete id="delete" parameterType="TzParams">
+		DELETE FROM h_content WHERE id=#{id}
+	</delete>
+	
+	
+	<!-- flushCache="true" 不加这句也行-->
+	<insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="Content">
+		insert into h_content(
+			title,
+			sub_title,
+			content,
+			static_link,
+			tag,
+			cover_img,
+			small_img,
+			cover_width,
+			cover_height,
+			hits,
+			loves,
+			collections,
+			comments,
+			keywords,
+			description,
+			html_code,
+			js_code,
+			css_code,
+			is_code,
+			header_pic,
+			author,
+			user_id,
+			channel_id,
+			is_delete,
+			is_top,
+			is_push,
+			is_comment,
+			issuance,
+			type)
+		VALUES(
+			#{title},
+			#{subTitle},
+			#{content},
+			#{staticLink},
+			#{tag},
+			#{coverImg},
+			#{smallImg},
+			#{coverWidth},
+			#{coverHeight},
+			#{hits},
+			#{loves},
+			#{collections},
+			#{comments},
+			#{keywords},
+			#{description},
+			#{htmlCode},
+			#{jsCode},
+			#{cssCode},
+			#{isCode},
+			#{headerPic},
+			#{author},
+			#{userId},
+			#{channelId},
+			#{isDelete},
+			#{isTop},
+			#{isPush},
+			#{isComment},
+			#{issuance},
+			#{type})
+	</insert>
+</mapper>
