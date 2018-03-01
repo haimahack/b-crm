@@ -15,7 +15,13 @@
 编译版本: jdk1.8
 
 编码：UTF-8
+
+git:
+	git clone https://github.com/haimahack/h-crm.git
 	
+演示：
+	![image](https://github.com/haimahack/h-crm/raw/master/h-crm.gif)
+
 
 
 
