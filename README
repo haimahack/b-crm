@@ -1,0 +1,19 @@
+﻿基于SSM CRM系统
+
+登录：
+	用户名 haima
+	密码 haima
+
+同级别目录(Source Folder):
+	|--src
+	|--config
+	|--test
+	
+数据库:
+	h-crm.sql(在db目录下) 导入即可
+	
+编译版本: jdk1.8
+
+JSTL 已在lib目录下不需要另外导入
+
+
