@@ -10,10 +10,12 @@
 	|--test
 	
 数据库:
-	h-crm.sql(在db目录下) 导入即可
+	h-crm.sql(在db目录下)
 	
 编译版本: jdk1.8
 
-JSTL 已在lib目录下不需要另外导入
+编码：UTF-8
+	
+
 
 
