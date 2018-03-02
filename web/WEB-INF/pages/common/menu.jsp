@@ -144,7 +144,6 @@
         	loading("没有选中的项...",5);
             return;
         }else{
-        	
         	$.tzConfirm({title:"删除提示",content:"你确定删除所选吗?",callback:function(ok){
         		if(ok){
 		        	//var $this2 = $(this);
@@ -154,13 +153,14 @@
 		        	//alert(arrStr);
 		        	var model = $("#tbody").data("model");
 		        	var dlen=checkedArray.length;
+
 		        	$(checkedArray).each(function(i,val){
 		        		val = parseInt(val);
 		        		var params={};
 						params["id"] = val;
-						
-						clearTimeout(timers2);
-		    			var timers2 = setTimeout(function(){
+
+						clearTimeout(this.timers2);
+		    			timers2 = setTimeout(function(){
 		    				loading("执行删除中,请稍后...",3);
 		    				$.ajax({
 		    					type:"post",
@@ -178,13 +178,17 @@
 		    								//alert(n);
 		    								var num=parseInt(n);
 		    						        $("table#tztab").find("tr:eq("+(num+1)+")").remove();
+
+
 		    							 });
+
 		    							/*var n = $this2.parents("tr").index();  // 获取checkbox所在行的顺序
 		    							var num=parseInt(n);
 		    					        $("table#tztab").find("tr:eq("+(num+1)+")").remove();*/
 		    						}
+
 		    						//睡眠1秒
-					    			//tzAdmin.sleep(500);
+					    			//tzAdmin.sleep(1000);
 		    					}
 		    				});
 		    			},200);

@@ -186,7 +186,7 @@
 	 					//alert(refer+"=="+(refer===login));
 	 					var logins = basePath+'/login';
 	 					//登陆成功后跳到之前退出前的访问页面
-	 					var go =(refer===logins||refer=='')?adminPath+'/index':refer;
+	 					var go =(refer===logins||refer=='')?basePath+'/sys/index':refer;
 	 					//alert(go);
 	 					window.location.href =go;
 	 				}

@@ -1,7 +1,11 @@
 package com.haima.crm.web;
 
-import java.util.HashMap;
-
+import com.haima.crm.core.constant.TzConstant;
+import com.haima.crm.entity.TzParams;
+import com.haima.crm.entity.User;
+import com.haima.crm.service.role.IRoleService;
+import com.haima.crm.service.user.IUserService;
+import com.haima.crm.util.TmStringUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,12 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.haima.crm.core.constant.TzConstant;
-import com.haima.crm.entity.TzParams;
-import com.haima.crm.entity.User;
-import com.haima.crm.service.role.IRoleService;
-import com.haima.crm.service.user.IUserService;
-import com.haima.crm.util.TmStringUtils;
+import java.util.HashMap;
 
 @Controller
 public class LoginController extends BaseController {
@@ -75,7 +74,7 @@ public class LoginController extends BaseController {
 						
 						try {
 							Thread.sleep(millis);
-							System.out.println("》》》》》 暂停"+millis+"s !《《《《《");
+							System.out.println("》》》》》 暂停"+millis+"ms !《《《《《");
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
