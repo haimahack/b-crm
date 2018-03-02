@@ -31,9 +31,7 @@ git:
 	git clone https://gitee.com/bonclan/h-crm.git
 	
 	
-演示：
-
-	![image](https://github.com/haimahack/h-crm/raw/master/h-crm.gif)
+演示：![image](https://github.com/haimahack/h-crm/raw/master/h-crm.gif)
 
 
 
