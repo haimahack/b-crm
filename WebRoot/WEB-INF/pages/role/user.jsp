@@ -19,8 +19,8 @@
 	<style type="text/css">
 		ul li{list-style:none;}
 		.ubox{height:360px;overflow: auto;margin-left:16px;}
-		#userbox li{height:24px;border-bottom: 1px solid #999;}
-		#userbox li .num{display:inline-block;max-width: 60px;height: 24px;text-align:right;padding:0 10px;}
+		#userbox li{height:24px;line-height:24px;border-bottom: 1px solid #999;}
+		#userbox li .num{display:inline-block;max-width: 60px;text-align:right;padding:0 10px;}
 		#userbox li .chk{position: relative;top:2px;}
 		#userbox li:hover{background:#398337;color:#fff;cursor:pointer;}
 		#userbox li.on{background:#333;color:#fff;}
@@ -33,7 +33,7 @@
 		<ul id="userbox">
 			<c:forEach items="${datas }" var="user" varStatus="uindex">
 				<li>
-					<span class="num chk"><input type="checkbox" class="check" value="${user.id}"></span>
+					<span class="num chk"><input type="checkbox" class="check" hidden="hidden" value="${user.id}"></span>
 					<span class="num">${uindex.count }:</span>
 					${user.uname }【${user.email }】
 				</li>
