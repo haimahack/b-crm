@@ -4,11 +4,12 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 角色实体
- *@author: haima
- *@fileName: Role.java
- *@packageName: com.haima.crm.auto
- *@date: 2018年2月22日 下午8:18:34
+ * @Desc: 角色
+ * @Author: haima
+ * @FileName: Role.java
+ * @PackageName: com.haima.crm.entity
+ * @Date: 2018-03-02 16:00
+ * @Email: haimaclan@163.com
  */
 public class Role implements Serializable {
 	

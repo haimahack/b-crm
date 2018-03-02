@@ -35,13 +35,13 @@ import com.haima.crm.service.content.IContentService;
 import com.haima.crm.util.TmStringUtils;
 
 /**
- * 站点采集
- *@author: haima
- *@fileName: Gather.java
- *@email: haimaclan@gmail.com
- *@date: 2018年02月23日  22:57:19
+ * @Desc: 站点采集
+ * @Author: haima
+ * @FileName: GatherController.java
+ * @PackageName: com.haima.crm.web.gather
+ * @Date: 2018-03-02 15:59
+ * @Email: haimaclan@163.com
  */
-
 @Controller
 @RequestMapping("/sys/gather")
 public class GatherController {

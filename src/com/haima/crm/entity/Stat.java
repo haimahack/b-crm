@@ -4,11 +4,12 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 统计
- *@author: haima
- *@fileName: Stat.java
- *@packageName: com.haima.crm.entity
- *@date: 2018年2月20日 下午9:25:34
+ * @Desc: 日志
+ * @Author: haima
+ * @FileName: Stat.java
+ * @PackageName: com.haima.crm.entity
+ * @Date: 2018-03-02 16:00
+ * @Email: haimaclan@163.com
  */
 public class Stat implements Serializable {
 	

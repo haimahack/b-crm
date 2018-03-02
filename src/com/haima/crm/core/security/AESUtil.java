@@ -1,15 +1,14 @@
 package com.haima.crm.core.security;
 
-import java.io.UnsupportedEncodingException;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
-
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;  
+import java.io.UnsupportedEncodingException;
 
 /**
- * AES加密解密
+ * AES加密解密(主要是为了加密db.properties中的用户名和密码)
  *@author: haima
  *@fileName: AESUtil.java
  *@packageName: com.haima.crm.core.security

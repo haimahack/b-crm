@@ -3,7 +3,14 @@ package com.haima.crm.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-
+/**
+ * @Desc: 采集的内容
+ * @Author: haima
+ * @FileName: Content.java
+ * @PackageName: com.haima.crm.entity
+ * @Date: 2018-03-02 16:00
+ * @Email: haimaclan@163.com
+ */
 public class Content implements Serializable {
 	
 	private Long id;            //
