@@ -9,7 +9,7 @@ import java.util.Date;
  * @FileName: Stat.java
  * @PackageName: com.haima.crm.entity
  * @Date: 2018-03-02 16:00
- * @Email: haimaclan@163.com
+ * @E-mail: haimaclan@gmail.com
  */
 public class Stat implements Serializable {
 	

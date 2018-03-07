@@ -1,21 +1,10 @@
 package com.haima.crm.web.gather;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.text.DecimalFormat;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.haima.crm.core.constant.TzConstant;
+import com.haima.crm.entity.Content;
+import com.haima.crm.entity.User;
+import com.haima.crm.service.content.IContentService;
+import com.haima.crm.util.TmStringUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -28,11 +17,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.haima.crm.core.constant.TzConstant;
-import com.haima.crm.entity.Content;
-import com.haima.crm.entity.User;
-import com.haima.crm.service.content.IContentService;
-import com.haima.crm.util.TmStringUtils;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.text.DecimalFormat;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @Desc: 站点采集
@@ -40,7 +33,7 @@ import com.haima.crm.util.TmStringUtils;
  * @FileName: GatherController.java
  * @PackageName: com.haima.crm.web.gather
  * @Date: 2018-03-02 15:59
- * @Email: haimaclan@163.com
+ * @E-mail: haimaclan@gmail.com
  */
 @Controller
 @RequestMapping("/sys/gather")
@@ -48,11 +41,6 @@ public class GatherController {
 
 	@Autowired
 	private IContentService contentService;
-	
-	private String news;
-	public String getNews() {
-		return news;
-	}
 	
 	@RequestMapping("list")
 	public String list(){
@@ -63,10 +51,10 @@ public class GatherController {
 	public String to(){
 		return "gather/to";
 	}
-	
+
 	/**
 	 * 下载
-	 * @param url
+	 * @param link
 	 * @param destPath
 	 * @param fileName
 	 */
@@ -160,7 +148,7 @@ public class GatherController {
 		System.out.println(link+" 《《《《《");
 		
 		String who = who(link);
-		String source = getHtmlSource(link,"gbk");
+		String source = getHtmlSource(link,who.equals("sina")?"utf-8":"gbk");
 		//System.out.println(source);
 		
 		Set<String> set = new HashSet<>();
@@ -173,15 +161,15 @@ public class GatherController {
 			if(!href.contains("http:")){
 				href = "http:"+href;
 			}
-			if(who.equalsIgnoreCase("qq")){
+			if(who.equals("qq")){
 				if(TmStringUtils.isNotEmpty(href) && (href.startsWith("http://new.qq.com/a/")||href.startsWith("http://new.qq.com/omn/"))){
 					set.add(href);
 				}
-			}else if(who.equalsIgnoreCase("sina")){
+			}else if(who.equals("sina")){
 				if(TmStringUtils.isNotEmpty(href) && (href.startsWith("http://news.sina.com.cn/s/")||href.startsWith("http://news.sina.com.cn/o/"))){
 					set.add(href);
 				}
-			}else if(who.equalsIgnoreCase("163")){
+			}else if(who.equals("163")){
 				if(TmStringUtils.isNotEmpty(href) && href.startsWith("http://news.163.com/18/")){
 					set.add(href);
 				}
@@ -200,16 +188,16 @@ public class GatherController {
 				// 标题
 				String title=document.getElementsByTag("h1").eq(0).text();
 				
-				if(who.equalsIgnoreCase("sina")){
+				if(who.equals("sina")){
 					title = document.getElementsByTag("h1").eq(1).text();
 				}
 				// 内容
 				String conId = "article";
 				Element contentEle = null;
-				if(who.equalsIgnoreCase("qq")){
+				if(who.equals("qq")){
 					conId="content-article";
 					contentEle = document.getElementsByClass("content-article").first();
-				}else if(who.equalsIgnoreCase("163")){
+				}else if(who.equals("163")){
 					conId="endText";
 					contentEle = document.getElementById(conId);
 				}else{
@@ -220,9 +208,9 @@ public class GatherController {
 				// 图片
 				String imgClass="img_wrapper";
 						
-				if(who.equalsIgnoreCase("163")){
+				if(who.equals("163")){
 					imgClass="f_center";
-				}else if(who.equalsIgnoreCase("qq")){
+				}else if(who.equals("qq")){
 					imgClass="one-p";
 				}
 				Elements poo = contentEle.getElementsByClass(imgClass).eq(0);

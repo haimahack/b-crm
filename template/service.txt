@@ -6,11 +6,11 @@ import [beanPackage].TzParams;
 
 
 /**
- * [description]
+ *@desc: [description]
  *@author: [author]
  *@fileName: [fileName]
- *@email: [email]
  *@date: [date]
+ *@email: [email]
  */
 public interface I[beanName]Service {
 

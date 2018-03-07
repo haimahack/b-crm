@@ -34,7 +34,7 @@
 
   <ul class="m-down">
 		<li>
-			<a href="javascript:void(0);" id="m-flush-go">
+			<a href="${adminPath}/content/export" id="m-export-go">
 				<div class="icon"></div>
 				<p>导出瞧瞧</p>
 			</a>
@@ -58,8 +58,8 @@
 		//alert(x+"=="+y);
 		var menu = document.querySelector("#menu");
 		menu.style.display="block";
-		menu.style.left = (x-50)+"px";
-		menu.style.top = (y-50)+"px";
+		menu.style.left = (x-30)+"px";
+		menu.style.top = (y-30)+"px";
 	
 		ev.preventDefault();
 	});
@@ -83,8 +83,7 @@
 		if((num-1)<=0){
 			loading("已经退无可退了...",5);
 			return;
-		}
-		else{
+		} else{
 			$("#tm_pagego").val(num-1);
 			$(".tm_go").trigger("click");
 		};
@@ -107,9 +106,8 @@
 		if((num+1)>page){
 			loading("已经是最后一页了...",5);
 			return;
-		}
-		else{
-			$("#tm_pagego").val(num+1)
+		} else{
+			$("#tm_pagego").val(num+1);
 			$(".tm_go").trigger("click");
 		};
 		
@@ -118,20 +116,29 @@
 		//$("#m-right-go").attr("href","javascript:history.forward();");
 		//alert($("#m-left-go").attr("href"));
 	});
-	
-	
+
 	/*导出*/
-	$("#m-flush-go").on("click",function(){
-		//刷新
-		//$("#m-flush-go").attr("href","javascript:location.reload();");
-		loading("导出功能尚在开发中...",10);
-	});
-	
+    $("#m-export-go").on("click",function(){
+    	loading("正在导出Excel,请稍候...",6);
+		//var model = $("#tbody").data("model");
+		//alert(model);
+		// return;
+		//tzAjax.request({
+		//    path:basePath,
+		//    model:"content",
+		//    method:"create",
+		//    success:function(data){
+		//
+		//    }
+		//});
+    });
+
+
 	//获取已选的复选框的值
     var checkedArray = new Array();//放已经选择的checkbox的value
     var count;//已经选择的个数
 
-	/*删除选中行*/
+	/*删除选中*/
 	$("#m-del-go").on("click",function(){
 		checkedArray.length=0;
         count=0;
@@ -167,10 +174,10 @@
 		    					url:adminPath+"/"+model+"/delete",
 		    					data:params,
 		    					success:function(data){
-		    						
+
 		    						if("success"==data){
 		    							loading("共 "+dlen+" 条数据删除成功...");
-		    							
+
 		    							$('[name="h-item"]:checkbox:checked').each(function() {
 			    							var $this = $(this);
 			    				            //alert($this);
@@ -181,22 +188,14 @@
 
 
 		    							 });
-
-		    							/*var n = $this2.parents("tr").index();  // 获取checkbox所在行的顺序
-		    							var num=parseInt(n);
-		    					        $("table#tztab").find("tr:eq("+(num+1)+")").remove();*/
 		    						}
-
-		    						//睡眠1秒
-					    			//tzAdmin.sleep(1000);
 		    					}
 		    				});
 		    			},200);
-		    			
 		        	});
         		}
         	}});
-        }
+        }//end else
 
         $('#checkedAll').prop('checked',false);
         /*

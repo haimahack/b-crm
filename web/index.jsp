@@ -5,15 +5,16 @@
 <html>
   <head>
     <title>index - h-crm</title>
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+	<meta charset="UTF-8">
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
+
 	<link rel="stylesheet" href="${basePath}/resources/sg/css/sg.css"/>
 	<link rel="stylesheet" type="text/css" href="${basePath }/resources/css/bootstrap.css">
-<link rel="stylesheet" type="text/css" href="${basePath }/resources/css/style.css">
+	<link rel="stylesheet" type="text/css" href="${basePath }/resources/css/style.css">
 	<!-- index style -->
 	<style type="text/css" rel="stylesheet" >
 		*{margin: 0;padding: 0;}

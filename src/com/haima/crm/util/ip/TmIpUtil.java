@@ -1,8 +1,8 @@
 package com.haima.crm.util.ip;
 
-import javax.servlet.http.HttpServletRequest;
-
 import com.haima.crm.util.TmStringUtils;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * ip相关工具类
@@ -187,7 +187,7 @@ public class TmIpUtil {
 	 */
 	public static String ipLocation(String ip) {
 		String ipLocation = "";
-		TmIPSeeker ipSeeker = new TmIPSeeker("qqwry.dat","I:/潭州学院高级班-v2.0/项目实战/WebRoot/ip");
+		TmIPSeeker ipSeeker = new TmIPSeeker("qqwry.dat","F:\\MyProjects\\IDEA_App\\h-crm\\web\\ip");
 		ipLocation = ipSeeker.getIPLocation(ip).getCountry() + " "+ ipSeeker.getIPLocation(ip).getArea();
 		return ipLocation;
 	}
@@ -207,7 +207,7 @@ public class TmIpUtil {
 	 */
 	public static String ipprovince(String ip) {
 		String ipLocation = "";
-		TmIPSeeker ipSeeker = new TmIPSeeker("qqwry.dat","D:/tzprojects/tz_desk/WebRoot/ip");
+		TmIPSeeker ipSeeker = new TmIPSeeker("qqwry.dat","F:\\MyProjects\\IDEA_App\\h-crm\\web\\ip");
 		ipLocation = ipSeeker.getIPLocation(ip).getCountry() ;
 		return ipLocation;
 	}
@@ -227,7 +227,7 @@ public class TmIpUtil {
 	 */
 	public static String ipcity(String ip) {
 		String ipLocation = "";
-		TmIPSeeker ipSeeker = new TmIPSeeker("qqwry.dat","D:/tzprojects/tz_desk/WebRoot/ip");
+		TmIPSeeker ipSeeker = new TmIPSeeker("qqwry.dat","F:\\MyProjects\\IDEA_App\\h-crm\\web\\ip");
 		ipLocation =  ipSeeker.getIPLocation(ip).getArea();
 		return ipLocation;
 	}
@@ -272,7 +272,7 @@ public class TmIpUtil {
 		try{
 			String ipLocation = "";
 			String ip = getIpAddress(request);
-			String path = request.getRealPath("/") + "/ip";
+			String path = request.getSession().getServletContext().getRealPath("/") + "/ip";
 			if (TmStringUtils.isNotEmpty(path)) {
 				path = TmStringUtils.conversionSpecialCharacters(path);
 				TmIPSeeker ipSeeker = new TmIPSeeker("qqwry.dat", path);

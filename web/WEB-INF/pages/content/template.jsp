@@ -16,7 +16,7 @@
 			${tz:timeFormat(content.createTime)}
 		</td>
 		<td>
-			${content.userId }
+			${uname }
 		</td>
 		<td>
 			<tz:if test="${content.isDelete==0}">

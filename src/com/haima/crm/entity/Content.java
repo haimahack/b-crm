@@ -8,8 +8,7 @@ import java.util.Date;
  * @Author: haima
  * @FileName: Content.java
  * @PackageName: com.haima.crm.entity
- * @Date: 2018-03-02 16:00
- * @Email: haimaclan@163.com
+ * @E-mail: haimaclan@gmail.com
  */
 public class Content implements Serializable {
 	

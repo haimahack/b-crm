@@ -16,7 +16,7 @@ public class TzParams {
 	private String order;
 	private String keyword;
 	private Integer pageNo = 0;
-	private Integer pageSize = 8;
+	private Integer pageSize = 20;
 	private Integer totalCount=0;
 	private Integer year;
 	private Integer month;

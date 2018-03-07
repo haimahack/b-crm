@@ -86,7 +86,7 @@
 		AND
 			DATE_FORMAT(create_time,'%m')=#{month}
 		ORDER BY ${order}
-		limit #{pageNo},#{pageSize}
+		LIMIT #{pageNo},#{pageSize}
 	</select>
 	
 	<!-- 用户统计分组 -->

@@ -20,6 +20,12 @@ public interface IContentMapper {
 	 * @return
 	 */
 	List<Content> find(TzParams params);
+
+	/**
+	 * 查询所有
+	 * @return
+	 */
+	List<Content> findAll();
 	
 	/**
 	 * 根据主键获取

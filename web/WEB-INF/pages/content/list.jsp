@@ -53,7 +53,7 @@
 									</caption>
 									<thead>
 										<tr>
-											<th style="width: 60px;"><input type="checkbox" id="checkedAll" />全选</th>
+											<th style="width: 60px;"><label for="checkedAll"></label><input type="checkbox" id="checkedAll" />全选</th>
 											<th style="width: 100px;">主键</th>
 											<th>标题</th>
 											<th style="width: 120px;">创建时间</th>
@@ -91,7 +91,7 @@
 		tzAdmin.loadData(0,20,function(itemCount){
 			tzAdmin.initPage(itemCount);//分页加载一次
 		});
-		
+
 	});
 	
 	

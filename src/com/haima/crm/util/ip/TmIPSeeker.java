@@ -1,5 +1,8 @@
 package com.haima.crm.util.ip;
 
+import com.haima.crm.util.TmStringUtils;
+import org.apache.log4j.Level;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -12,20 +15,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Level;
-
-import com.haima.crm.util.TmStringUtils;
-
 
 public class TmIPSeeker {
 	//纯真IP数据库名
 	private String IP_FILE="qqwry.dat";
 	//保存的文件夹
-	private String INSTALL_DIR="C:\\temp";
+	private String INSTALL_DIR="C:\\Program Files (x86)\\cz88.net\\ip";
 	
 	public static String FILE_NAME = "qqwry.dat";
 	
-	public static String FILE_PATH =  "F:\\MyProjects\\JavaWeb\\h-crm\\WebRoot\\ip";
+	public static String FILE_PATH =  "F:\\MyProjects\\IDEA_App\\h-crm\\web\\ip";
 	
 	
 	// 一些固定常量，比如记录长度等等

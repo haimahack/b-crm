@@ -47,8 +47,46 @@
 		ORDER BY ${order}
 		LIMIT #{pageNo},#{pageSize} 		
 	</select>
+
+	<select id="findAll" resultType="Content" >
+		SELECT
+			id,
+			title,
+			sub_title as subTitle,
+			content,
+			create_time as createTime,
+			update_time as updateTime,
+			static_link as staticLink,
+			tag,
+			cover_img as coverImg,
+			small_img as smallImg,
+			cover_width as coverWidth,
+			cover_height as coverHeight,
+			hits,
+			loves,
+			collections,
+			comments,
+			keywords,
+			description,
+			html_code as htmlCode,
+			js_code as jsCode,
+			css_code as cssCode,
+			is_code as isCode,
+			header_pic as headerPic,
+			author,
+			user_id as userId,
+			channel_id as channelId,
+			is_delete as isDelete,
+			is_top as isTop,
+			is_push as isPush,
+			is_comment as isComment,
+			issuance,
+			type
+		FROM
+			h_content;
+	</select>
 	
-	<select id="count" resultType="Long" parameterType="TzParams">
+	<select id="count" resultType="java.lang.Long" parameterType="TzParams">
 		SELECT
 			COUNT(1)
 		FROM

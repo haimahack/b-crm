@@ -1,15 +1,14 @@
 package com.haima.crm.service.content.impl;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.haima.crm.dao.content.IContentMapper;
 import com.haima.crm.entity.Content;
 import com.haima.crm.entity.TzParams;
 import com.haima.crm.service.content.IContentService;
 import com.haima.crm.util.TmStringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 内容管理
@@ -30,7 +29,12 @@ public class ContentServiceImpl implements IContentService {
 			params.setOrder("create_time DESC");
 		return contentMapper.find(params);
 	}
-	
+
+	@Override
+	public List<Content> findAll() {
+		return contentMapper.findAll();
+	}
+
 	@Override
 	public Content get(Long id) {
 		return contentMapper.get(id);

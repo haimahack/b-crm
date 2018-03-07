@@ -5,10 +5,35 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!--  _____                    _____                    _____                    _____
+         /\    \                  /\    \                  /\    \                  /\    \
+        /::\____\                /::\    \                /::\    \                /::\    \
+       /:::/    /                \:::\    \              /::::\    \              /::::\    \
+      /:::/    /                  \:::\    \            /::::::\    \            /::::::\    \
+     /:::/    /                    \:::\    \          /:::/\:::\    \          /:::/\:::\    \
+    /:::/____/                      \:::\    \        /:::/__\:::\    \        /:::/__\:::\    \
+   /::::\    \                      /::::\    \      /::::\   \:::\    \      /::::\   \:::\    \
+  /::::::\    \   _____    ____    /::::::\    \    /::::::\   \:::\    \    /::::::\   \:::\    \
+ /:::/\:::\    \ /\    \  /\   \  /:::/\:::\    \  /:::/\:::\   \:::\____\  /:::/\:::\   \:::\    \
+/:::/  \:::\    /::\____\/::\   \/:::/  \:::\____\/:::/  \:::\   \:::|    |/:::/__\:::\   \:::\____\
+\::/    \:::\  /:::/    /\:::\  /:::/    \::/    /\::/   |::::\  /:::|____|\:::\   \:::\   \::/    /
+ \/____/ \:::\/:::/    /  \:::\/:::/    / \/____/  \/____|:::::\/:::/    /  \:::\   \:::\   \/____/
+          \::::::/    /    \::::::/    /                 |:::::::::/    /    \:::\   \:::\    \
+           \::::/    /      \::::/____/                  |::|\::::/    /      \:::\   \:::\____\
+           /:::/    /        \:::\    \                  |::| \::/____/        \:::\   \::/    /
+          /:::/    /          \:::\    \                 |::|  ~|               \:::\   \/____/
+         /:::/    /            \:::\    \                |::|   |                \:::\    \
+        /:::/    /              \:::\____\               \::|   |                 \:::\____\
+        \::/    /                \::/    /                \:|   |                  \::/    /
+         \/____/                  \/____/                  \|___|                   \/____/-->
 	<title>login - h-crm</title>
+	<meta charset="UTF-8">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+
 	<link rel="stylesheet" type="text/css" href="${basePath }/resources/css/login-default.css">
 	<link rel="stylesheet" type="text/css" href="${basePath }/resources/css/login-styles.css">
 	<%@ include file="../pages/common/taglib.jsp" %>
@@ -91,14 +116,14 @@
 						<div class="group">
 							<input type="button" class="button" id="h-enroll" value="注 册">
 						</div>
-						<div id="mid-box">
-							<span class="move2"></span>
-							<span class="move2 d1"></span>
-							<span class="move2 d2"></span>
-							<span class="move2 d3"></span>
+						<div id="mid2-box">
+							<span class="move3"></span>
+							<span class="move3 d1"></span>
+							<span class="move3 d2"></span>
+							<span class="move3 d3"></span>
 						</div>
 						<div class="foot-lnk">
-							<label for="tab-1">Already Member?</a>
+							<label for="tab-1"><a>Already Member?</a></label>
 						</div>
 					</div>
 				</div>

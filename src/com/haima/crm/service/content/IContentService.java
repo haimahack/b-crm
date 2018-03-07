@@ -1,9 +1,9 @@
 package com.haima.crm.service.content;
 
-import java.util.List;
-
 import com.haima.crm.entity.Content;
 import com.haima.crm.entity.TzParams;
+
+import java.util.List;
 
 
 /**
@@ -20,6 +20,12 @@ public interface IContentService {
 	 * @return
 	 */
 	List<Content> find(TzParams params);
+
+	/**
+	 * 查询所有
+	 * @return
+	 */
+	List<Content> findAll();
 	
 	/**
 	 * 根据主键获取内容
