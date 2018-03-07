@@ -5,7 +5,6 @@ import com.haima.crm.entity.Content;
 import com.haima.crm.entity.User;
 import com.haima.crm.service.content.IContentService;
 import com.haima.crm.util.TmStringUtils;
-import org.apache.commons.lang3.RandomUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -142,8 +141,6 @@ public class GatherController {
 	@ResponseBody
 	@RequestMapping(value="data",method=RequestMethod.POST)
 	public String gather(@ModelAttribute("news") String news, HttpServletRequest request,HttpServletResponse response) {
-		Long millis = RandomUtils.nextLong(1550, 2550);
-		
 		String link = news;
 		System.out.println(link+" 《《《《《");
 		
@@ -196,7 +193,7 @@ public class GatherController {
 				Element contentEle = null;
 				if(who.equals("qq")){
 					conId="content-article";
-					contentEle = document.getElementsByClass("content-article").first();
+					contentEle = document.getElementsByClass(conId).first();
 				}else if(who.equals("163")){
 					conId="endText";
 					contentEle = document.getElementById(conId);
@@ -234,23 +231,12 @@ public class GatherController {
 					response.sendRedirect(request.getContextPath()+"/login");
 					//return returnResult("fail");
 				}
-				try {
-					Thread.sleep(millis);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
 				contentService.save(content);
 			} catch (Exception e) {
 				continue;
 			}
 		}
 		
-		
-		try {
-			Thread.sleep(millis);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		return returnResult("success");
 	}
 
